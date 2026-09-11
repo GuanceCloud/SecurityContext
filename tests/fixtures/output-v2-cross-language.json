@@ -1,0 +1,325 @@
+{
+  "schema_version": 2,
+  "source": "security_context",
+  "identity": {
+    "application_id": "fixture-app",
+    "instance_id": "fixture-instance",
+    "service": {
+      "service.name": "fixture-service"
+    },
+    "code": {
+      "repository": "securitycontext/fixture",
+      "commit": "fixture-commit",
+      "build_id": "fixture-build",
+      "service_version": "0.2.0"
+    },
+    "runtime": {
+      "language": "cross-runtime",
+      "implementation": "securitycontext",
+      "version": "0.2.0",
+      "os": "linux",
+      "architecture": "arm64",
+      "details": {
+        "fixture": "output-v2"
+      }
+    },
+    "identity_status": "configured"
+  },
+  "fingerprints": [
+    {
+      "name": "unicode-and-delimiter",
+      "application_id": "fixture-app",
+      "language": "cross-runtime",
+      "rule": "sql_injection",
+      "sink": {
+        "function": "db.execute|v2",
+        "role": "sql_template",
+        "location": "fixture:12|unicode",
+        "operation": "",
+        "path_role": "",
+        "input_part": ""
+      },
+      "signatures": [
+        "http.request.parameter|q=é",
+        "http.request.parameter|q=𐐷",
+        "http.request.parameter|q=é",
+        "prefix-",
+        "prefix-𐐷",
+        "delimiter|a\u001fb"
+      ],
+      "expected": "finding-82b686de56f45006859326dca32140e9f02df9d4a4e16d5c517641a22775d564"
+    },
+    {
+      "name": "length-prefix-left",
+      "application_id": "fixture-app",
+      "language": "cross-runtime",
+      "rule": "command_injection",
+      "sink": {
+        "function": "exec|fixture",
+        "role": "shell_script",
+        "location": "fixture:13",
+        "operation": "",
+        "path_role": "",
+        "input_part": ""
+      },
+      "signatures": [
+        "a",
+        "bc"
+      ],
+      "expected": "finding-f8f73d765e64d19b006cebf0157f71f6a8078cb1f97754fad1c722e7d86c568a"
+    },
+    {
+      "name": "length-prefix-right",
+      "application_id": "fixture-app",
+      "language": "cross-runtime",
+      "rule": "command_injection",
+      "sink": {
+        "function": "exec|fixture",
+        "role": "shell_script",
+        "location": "fixture:13",
+        "operation": "",
+        "path_role": "",
+        "input_part": ""
+      },
+      "signatures": [
+        "ab",
+        "c"
+      ],
+      "expected": "finding-0f5641ff071ed117c7b9946cf6d476c857433bf784550226a3fd2ab1d8a86880"
+    }
+  ],
+  "sink_aliases": [
+    {
+      "rule": "sql_injection",
+      "role": "template",
+      "function": "db.execute",
+      "location": "fixture:sql",
+      "expected": {
+        "role": "sql_template",
+        "operation": "",
+        "path_role": "",
+        "input_part": ""
+      }
+    },
+    {
+      "rule": "command_injection",
+      "role": "shell_command",
+      "function": "sh -c",
+      "location": "fixture:shell",
+      "expected": {
+        "role": "shell_script",
+        "operation": "",
+        "path_role": "",
+        "input_part": ""
+      }
+    },
+    {
+      "rule": "path_traversal",
+      "role": "source",
+      "function": "fs.readFile",
+      "location": "fixture:file",
+      "expected": {
+        "role": "file_path",
+        "operation": "read",
+        "path_role": "source",
+        "input_part": ""
+      }
+    },
+    {
+      "rule": "http_request_input",
+      "role": "request_query",
+      "function": "http.request",
+      "location": "fixture:http",
+      "expected": {
+        "role": "path_or_query",
+        "operation": "",
+        "path_role": "",
+        "input_part": "query"
+      }
+    }
+  ],
+  "event_templates": {
+    "dataflow": {
+      "identity": {
+        "application_id": "fixture-app",
+        "instance_id": "fixture-instance",
+        "service": {
+          "service.name": "fixture-service"
+        },
+        "code": {
+          "repository": "securitycontext/fixture",
+          "commit": "fixture-commit",
+          "build_id": "fixture-build",
+          "service_version": "0.2.0"
+        },
+        "runtime": {
+          "language": "cross-runtime",
+          "implementation": "securitycontext",
+          "version": "0.2.0",
+          "os": "linux",
+          "architecture": "arm64",
+          "details": {
+            "fixture": "output-v2"
+          }
+        },
+        "identity_status": "configured"
+      },
+      "event_name": "security.dataflow.observed",
+      "fingerprint_version": 2,
+      "trace_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "server_span_id": "bbbbbbbbbbbbbbbb",
+      "current_span_id": "cccccccccccccccc",
+      "trace_flags": 1,
+      "sources": [
+        {
+          "id": "src-1",
+          "type": "http.request.parameter",
+          "name": "q",
+          "location": "fixture:source",
+          "value_type": "string",
+          "value_length": 3
+        }
+      ],
+      "ranges": [
+        {
+          "source_id": "src-1",
+          "start": 0,
+          "end": 3,
+          "exact": true,
+          "unit": "utf16_code_unit"
+        }
+      ],
+      "sink": {
+        "function": "db.execute",
+        "role": "sql_template",
+        "location": "fixture:sink",
+        "operation": "",
+        "path_role": "",
+        "input_part": ""
+      },
+      "stack": [
+        "fixture.stack"
+      ],
+      "source": "security_context"
+    },
+    "incomplete": {
+      "identity": {
+        "application_id": "fixture-app",
+        "instance_id": "fixture-instance",
+        "service": {
+          "service.name": "fixture-service"
+        },
+        "code": {
+          "repository": "securitycontext/fixture",
+          "commit": "fixture-commit",
+          "build_id": "fixture-build",
+          "service_version": "0.2.0"
+        },
+        "runtime": {
+          "language": "cross-runtime",
+          "implementation": "securitycontext",
+          "version": "0.2.0",
+          "os": "linux",
+          "architecture": "arm64",
+          "details": {
+            "fixture": "output-v2"
+          }
+        },
+        "identity_status": "configured"
+      },
+      "event_name": "security.collection.incomplete",
+      "truncated": true,
+      "coverage_gaps": [
+        "fixture_budget"
+      ],
+      "counts": {
+        "objects": null,
+        "nodes": null,
+        "sources": null,
+        "findings": null,
+        "retained_bytes": null
+      },
+      "source": "security_context"
+    },
+    "sbom_snapshot": {
+      "identity": {
+        "application_id": "fixture-app",
+        "instance_id": "fixture-instance",
+        "service": {
+          "service.name": "fixture-service"
+        },
+        "code": {
+          "repository": "securitycontext/fixture",
+          "commit": "fixture-commit",
+          "build_id": "fixture-build",
+          "service_version": "0.2.0"
+        },
+        "runtime": {
+          "language": "cross-runtime",
+          "implementation": "securitycontext",
+          "version": "0.2.0",
+          "os": "linux",
+          "architecture": "arm64",
+          "details": {
+            "fixture": "output-v2"
+          }
+        },
+        "identity_status": "configured"
+      },
+      "event_name": "app-dependencies-loaded",
+      "sbom_id": "urn:securitycontext:component:fixture",
+      "revision": 1,
+      "dependencies": [
+        {
+          "name": "example:loaded-library",
+          "version": "1.0.0"
+        }
+      ],
+      "part_index": 0,
+      "part_count": 1,
+      "component_count": 1,
+      "source": "security_context_sbom"
+    },
+    "sbom_health": {
+      "identity": {
+        "application_id": "fixture-app",
+        "instance_id": "fixture-instance",
+        "service": {
+          "service.name": "fixture-service"
+        },
+        "code": {
+          "repository": "securitycontext/fixture",
+          "commit": "fixture-commit",
+          "build_id": "fixture-build",
+          "service_version": "0.2.0"
+        },
+        "runtime": {
+          "language": "cross-runtime",
+          "implementation": "securitycontext",
+          "version": "0.2.0",
+          "os": "linux",
+          "architecture": "arm64",
+          "details": {
+            "fixture": "output-v2"
+          }
+        },
+        "identity_status": "configured"
+      },
+      "event_name": "security.sbom.health",
+      "sbom_id": "urn:securitycontext:component:fixture",
+      "revision": 1,
+      "status": "degraded",
+      "last_error_type": "fixture_error",
+      "reasons": [
+        "fixture_budget"
+      ],
+      "source": "security_context_sbom"
+    }
+  },
+  "range_units": {
+    "node": "utf16_code_unit",
+    "java": "utf16_code_unit",
+    "python": "unicode_code_point",
+    "bytes": "byte"
+  }
+}

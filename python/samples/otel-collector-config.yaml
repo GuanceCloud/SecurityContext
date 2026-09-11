@@ -1,0 +1,21 @@
+receivers:
+  otlp:
+    protocols:
+      http:
+        endpoint: 0.0.0.0:4318
+
+processors:
+  batch:
+    timeout: 100ms
+
+exporters:
+  file/security:
+    path: /var/lib/otelcol/security.jsonl
+    append: true
+
+service:
+  pipelines:
+    logs/security:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [file/security]

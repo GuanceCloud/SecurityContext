@@ -1,0 +1,44 @@
+{
+  "name": "securitycontext",
+  "version": "0.2.5",
+  "description": "Bounded OpenTelemetry security dataflow evidence and runtime SBOM for Node.js",
+  "type": "module",
+  "engines": { "node": ">=22.22.3 <23 || >=24.11.1 <25" },
+  "exports": {
+    ".": { "types": "./src/index.d.ts", "import": "./src/index.mjs", "require": "./src/index.mjs" },
+    "./register": "./src/register.mjs"
+  },
+  "files": ["src", "README.md", "README.en.md", "docs", "samples", "data", "package-lock.json"],
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "prepack": "node scripts/prepare-package.mjs"
+  },
+  "peerDependencies": { "@opentelemetry/api": ">=1.9.1 <1.10.0" },
+  "dependencies": {
+    "@babel/generator": "8.0.0",
+    "@babel/parser": "8.0.4",
+    "@babel/traverse": "8.0.4",
+    "@babel/types": "8.0.4",
+    "@jridgewell/trace-mapping": "0.3.31",
+    "@opentelemetry/api-logs": "0.222.0",
+    "@opentelemetry/core": "2.11.0",
+    "@opentelemetry/instrumentation": "0.222.0",
+    "import-in-the-middle": "3.4.0",
+    "require-in-the-middle": "8.0.1"
+  },
+  "devDependencies": {
+    "@opentelemetry/api": "1.9.1",
+    "@opentelemetry/sdk-node": "0.222.0",
+    "@opentelemetry/sdk-trace-base": "2.11.0",
+    "@opentelemetry/sdk-logs": "0.222.0",
+    "@opentelemetry/exporter-logs-otlp-http": "0.222.0",
+    "@opentelemetry/instrumentation-http": "0.222.0",
+    "@opentelemetry/instrumentation-express": "0.70.0",
+    "express": "5.2.1",
+    "express4": "npm:express@4.21.2",
+    "fastify": "5.12.3",
+    "pg": "8.23.0",
+    "mysql2": "3.24.3",
+    "undici": "8.10.2"
+  }
+}

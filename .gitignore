@@ -1,0 +1,8 @@
+.gradle/
+**/build/
+security-output/
+*.log
+.DS_Store
+dist/
+__pycache__/
+*.py[cod]

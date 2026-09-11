@@ -1,0 +1,61 @@
+plugins {
+    id 'java'
+    id 'com.gradleup.shadow'
+}
+
+group = 'example.securitycontext.validation'
+version = '0.1.0'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    def okhttpVersion = providers.gradleProperty('okhttpVersion').orElse('4.12.0').get()
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.7.18'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc:2.7.18'
+    implementation 'org.apache.httpcomponents:httpclient:4.5.14'
+    implementation 'org.apache.httpcomponents.client5:httpclient5:5.4.2'
+    implementation "com.squareup.okhttp3:okhttp:${okhttpVersion}"
+    runtimeOnly 'com.h2database:h2:2.2.224'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.7.18'
+}
+
+// Spring Boot 2.7's Gradle plugin calls the removed Gradle 9
+// LenientConfiguration API. Keep the Boot 2 dependency set while using the
+// repository's Gradle 9 Shadow packaging task for a runnable fixture.
+tasks.named('shadowJar') {
+    archiveFileName = 'security-validation-boot2.jar'
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    mergeServiceFiles()
+    append 'META-INF/spring.factories'
+    append 'META-INF/spring.handlers'
+    append 'META-INF/spring.schemas'
+    manifest {
+        attributes 'Main-Class': 'example.securitycontext.validation.ValidationApplication'
+    }
+}
+
+tasks.named('jar') {
+    enabled = false
+}
+
+tasks.register('bootJar') {
+    dependsOn tasks.named('shadowJar')
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+// The root build configures every subproject for Java 8 so the agent modules
+// stay loadable on legacy runtimes. Keep that default explicit for this
+// Java 8 fixture when the root configuration changes.
+tasks.withType(JavaCompile).configureEach {
+    options.release.set(8)
+}

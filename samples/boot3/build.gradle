@@ -1,0 +1,45 @@
+plugins {
+    id 'org.springframework.boot' version '3.5.0'
+    id 'io.spring.dependency-management' version '1.1.7'
+    id 'java'
+}
+
+group = 'example.securitycontext.validation'
+version = '0.1.0'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.apache.httpcomponents:httpclient:4.5.14'
+    implementation 'org.apache.httpcomponents.client5:httpclient5:5.4.2'
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+    runtimeOnly 'com.h2database:h2:2.2.224'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('bootJar') {
+    archiveFileName = 'security-validation-boot3.jar'
+}
+
+tasks.named('jar') {
+    enabled = false
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+// Boot 3 is the modern compiler leg of the validation matrix. Override the
+// root agent default so javac emits Java 17 bytecode and modern concat sites.
+tasks.withType(JavaCompile).configureEach {
+    options.release.set(17)
+}

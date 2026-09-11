@@ -1,0 +1,8 @@
+include README.md README.en.md setup.py constraints*.txt
+recursive-include _shared *.py *.yaml
+recursive-include docs *.md
+recursive-include samples *.py *.md *.yaml
+recursive-include scripts *.py *.sh
+recursive-include tests *.py
+global-exclude *.pyc
+global-exclude __pycache__

@@ -1,0 +1,123 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.7",
+  "serialNumber": "urn:uuid:00000000-0000-4000-8000-000000000001",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-01-01T00:00:00Z",
+    "lifecycles": [
+      {
+        "phase": "operations"
+      }
+    ],
+    "component": {
+      "type": "application",
+      "bom-ref": "application-anonymous",
+      "name": "anonymous-java-application"
+    },
+    "tools": {
+      "components": [
+        {
+          "type": "application",
+          "name": "securitycontext",
+          "version": "0.1.0"
+        },
+        {
+          "type": "application",
+          "name": "OpenTelemetry Java Agent",
+          "version": "2.31.1"
+        },
+        {
+          "type": "platform",
+          "name": "JVM",
+          "version": "17"
+        }
+      ]
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "urn:securitycontext:component:anonymous-runtime",
+      "name": "anonymous-runtime",
+      "group": "org.example",
+      "version": "1.0.0",
+      "purl": "pkg:maven/org.example/anonymous-runtime@1.0.0",
+      "hashes": [
+        {
+          "alg": "SHA-256",
+          "content": "0000000000000000000000000000000000000000000000000000000000000001"
+        }
+      ],
+      "properties": [
+        {
+          "name": "securitycontext:sbom:identity-source",
+          "value": "maven-metadata"
+        },
+        {
+          "name": "securitycontext:sbom:deployed",
+          "value": "true"
+        },
+        {
+          "name": "securitycontext:sbom:loaded",
+          "value": "true"
+        }
+      ],
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "application.jar"
+          }
+        ]
+      }
+    },
+    {
+      "type": "library",
+      "bom-ref": "urn:securitycontext:component:anonymous-parser",
+      "name": "anonymous-parser",
+      "group": "org.example",
+      "version": "2.0.0",
+      "purl": "pkg:maven/org.example/anonymous-parser@2.0.0",
+      "properties": [
+        {
+          "name": "securitycontext:sbom:identity-source",
+          "value": "build-sbom"
+        },
+        {
+          "name": "securitycontext:sbom:deployed",
+          "value": "false"
+        },
+        {
+          "name": "securitycontext:sbom:loaded",
+          "value": "false"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "urn:securitycontext:component:anonymous-runtime",
+      "dependsOn": [
+        "urn:securitycontext:component:anonymous-parser"
+      ]
+    }
+  ],
+  "compositions": [
+    {
+      "aggregate": "incomplete",
+      "assemblies": [
+        "application-anonymous"
+      ]
+    }
+  ],
+  "properties": [
+    {
+      "name": "securitycontext:sbom:completeness-reasons",
+      "value": "runtime_dependency_graph_incomplete"
+    },
+    {
+      "name": "securitycontext:sbom:loaded-semantics",
+      "value": "class_observed_not_method_execution"
+    }
+  ]
+}
