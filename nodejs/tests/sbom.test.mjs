@@ -305,6 +305,42 @@ test('healthy close settles after a published observation without a late failure
   }
 });
 
+test('close publishes loader observations that are still waiting for the batch timer', { concurrency: false }, async () => {
+  const { root } = await fixture();
+  const output = path.join(root, 'close-flush-output');
+  withEnvironment(root, output, { SECURITY_SBOM_REFRESH_SECONDS: '300' });
+  const events = [];
+  const inventory = new SbomInventory({ application_id: 'app-close-flush' }, output, event => events.push(event));
+  try {
+    inventory.start();
+    const first = await waitFor(events, event => event.event_name === 'app-dependencies-loaded');
+    const lateRoot = path.join(root, 'node_modules', 'trusted-pkg');
+    const lateFile = path.join(lateRoot, 'index.mjs');
+    await fs.writeFile(lateFile, 'export default true;\n');
+
+    inventory.observe(`${pathToFileURL(lateFile).href}?shutdown=immediate`);
+    await inventory.close(2500);
+
+    const document = JSON.parse(await fs.readFile(path.join(output, 'application.cdx.json'), 'utf8'));
+    const component = document.components.find(item => item.name === 'trusted-pkg' && item.version === '2.0.0');
+    assert.ok(component);
+    assert.equal(component.properties.find(item => item.name === 'securitycontext:sbom:loaded')?.value, 'true');
+    assert.ok(document.serialNumber);
+    assert.equal(document.version, first.revision + 1);
+    const resolved = inventory.resolve(pathToFileURL(lateFile));
+    assert.equal(resolved.status, 'resolved');
+    assert.equal(resolved['bom-ref'], component['bom-ref']);
+    assert.equal(resolved.revision, document.version);
+    assert.equal(events.filter(event => event.event_name === 'security.sbom.update_failed').length, 0);
+  } finally {
+    await inventory.close(100);
+    delete process.env.SECURITY_NODE_INCLUDE;
+    delete process.env.SECURITY_SBOM_OUTPUT;
+    delete process.env.SECURITY_SBOM_REFRESH_SECONDS;
+    await fs.rm(root, { recursive: true, force: true });
+  }
+});
+
 
 test('history preserves unchanged entries and retries failed updates before removal and restoration', { concurrency: false }, async () => {
   const { root } = await fixture();
