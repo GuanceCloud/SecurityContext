@@ -22,12 +22,12 @@ import urllib.parse
 import urllib.request
 
 
-ROOT = pathlib.Path(__file__).resolve().parents[1]
-OUTPUT = ROOT / "build" / "validation" / "benchmark"
-AGENT = ROOT / "build" / "deps" / "opentelemetry-javaagent-2.31.1.jar"
-BUILT_EXTENSION = ROOT / "security-otel-extension" / "build" / "libs" / "securitycontext.jar"
+JAVA_ROOT = pathlib.Path(__file__).resolve().parents[1]
+OUTPUT = JAVA_ROOT / "build" / "validation" / "benchmark"
+AGENT = JAVA_ROOT / "build" / "deps" / "opentelemetry-javaagent-2.31.1.jar"
+BUILT_EXTENSION = JAVA_ROOT / "security-otel-extension" / "build" / "libs" / "securitycontext.jar"
 EXTENSION = pathlib.Path(os.environ.get("SECURITY_BENCHMARK_EXTENSION", str(BUILT_EXTENSION)))
-APP = ROOT / "samples" / "boot2" / "build" / "libs" / "security-validation-boot2.jar"
+APP = JAVA_ROOT / "samples" / "boot2" / "build" / "libs" / "security-validation-boot2.jar"
 IMAGE = "eclipse-temurin:17-jre"
 
 

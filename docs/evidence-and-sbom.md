@@ -1,6 +1,6 @@
 # 证据与 SBOM 语义
 
-本文补充 SecurityContext schema v2 的证据与 SBOM 语义。旧 0.2.1 的独立运行证据和 candidate3 结果只作历史资料，不能替代当前 0.3.0/0.2.0 门禁。强杀/主机故障恢复、trace 重放和外部后端 ACK 不在当前原型边界内。
+本文补充 SecurityContext schema v2 的证据与 SBOM 语义。旧 0.2.1 的独立运行证据和 candidate3 结果只作历史资料，不能替代当前 Java 0.3.4、Node.js/Python 0.2.5 的门禁。强杀/主机故障恢复、trace 重放和外部后端 ACK 不在当前原型边界内。
 
 SBOM 上报（`app-dependencies-loaded` 和 `security.sbom.*`）使用 `source=security_context_sbom`，其他安全事件使用 `source=security_context`；OTLP log 的 `attributes.source` 与 JSON body 的 `source` 一致。截断 summary/minimal 保留原事件的 source。本地 CycloneDX 和状态文件保持原有结构及 source。
 
@@ -23,7 +23,7 @@ SBOM 上报（`app-dependencies-loaded` 和 `security.sbom.*`）使用 `source=s
 | SBOM | `sbom_id`、revision、release_id 和 `component.bom-ref`；无法准确解析时保留 `status=unresolved` 及 reason |
 | 完整性 | `truncated`、`coverage`、`coverage_gaps` 和 `component` 解析状态 |
 
-Python 0.2.0、Node.js 0.2.0 和 Java 0.3.0 共用 `schema_version=2`。Python 的 `ranges[].unit` 对 `str` 为 `unicode_code_point`，对 `bytes` 为 `byte`；JVM 和 JavaScript 文本为 `utf16_code_unit`。范围单位不能混用。三种语言的模块、函数、文件和行号参与 finding 指纹；fingerprint v2 额外包含 language，并使用 UTF-8 长度前缀和 UTF-16 signature 排序，详见[schema v2 文档](security-context-log-schema.md)。
+Python 0.2.5、Node.js 0.2.5 和 Java 0.3.4 共用 `schema_version=2`。Python 的 `ranges[].unit` 对 `str` 为 `unicode_code_point`，对 `bytes` 为 `byte`；JVM 和 JavaScript 文本为 `utf16_code_unit`。范围单位不能混用。三种语言的模块、函数、文件和行号参与 finding 指纹；fingerprint v2 额外包含 language，并使用 UTF-8 长度前缀和 UTF-16 signature 排序，详见[schema v2 文档](security-context-log-schema.md)。
 
 代码身份必须由配置显式提供：
 
@@ -144,11 +144,11 @@ with_license
 
 ### 生命周期和缓存
 
-启动后 SBOM 在后台刷新，默认每 5 秒检查 classpath 和已加载 class 的 CodeSource。制品解析缓存按 size、mtime 和 file key 形成指纹，默认 300 秒有效。发现新位置、加载证据或 artifact 变化时，只有内容发生变化才发布新 revision；OTel Logs 使用 `app-dependencies-loaded` 上报 name/version/必要时 hash 的已加载依赖快照，大快照按修订号分片；added/updated/removed 历史保留在本地 history，完整 CycloneDX 文件由 `security-sbom/SbomInventory.publish` 临时写入后 atomic move。
+启动后 SBOM 在后台刷新，默认每 5 秒检查 classpath 和已加载 class 的 CodeSource。制品解析缓存按 size、mtime 和 file key 形成指纹，默认 300 秒有效。发现新位置、加载证据或 artifact 变化时，只有内容发生变化才发布新 revision；OTel Logs 使用 `app-dependencies-loaded` 上报 name/version/必要时 hash 的已加载依赖快照，大快照按修订号分片；added/updated/removed 历史保留在本地 history，完整 CycloneDX 文件由 `java/security-sbom` 中的 `SbomInventory.publish` 临时写入后 atomic move。
 
 SBOM health 的 `last_refresh_at`、`last_failure_at`、revision、current component count 和 history count 是新鲜度/库存状态指标；它们不表示扫描覆盖率或漏洞召回率。扫描失败、重试和删除 delta 要结合 completeness reasons、已加载依赖快照和 history 的 current/removed 状态解释。
 
-`security-exporter` 不直接写 `application.cdx.json`，只发送 SBOM LogRecord、维护独立 SBOM 队列和投递诊断。`security.evidence.file` 不包含 SBOM 事件。SBOM 扫描、归档读取和哈希计算不在请求路径运行；请求路径的组件 resolve 只查已经发布的 mapping，不触发扫描或哈希。
+`java/security-exporter` 不直接写 `application.cdx.json`，只发送 SBOM LogRecord、维护独立 SBOM 队列和投递诊断。`security.evidence.file` 不包含 SBOM 事件。SBOM 扫描、归档读取和哈希计算不在请求路径运行；请求路径的组件 resolve 只查已经发布的 mapping，不触发扫描或哈希。
 
 ## SBOM 与证据的隐私边界
 

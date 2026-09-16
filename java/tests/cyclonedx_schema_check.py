@@ -2,7 +2,7 @@
 """Validate a CycloneDX JSON document without adding a schema dependency.
 
 The full schema validation is performed by the optional `check-jsonschema`
-gate in scripts/validate_injection.sh when network/package access is present.
+gate in `java/scripts/validate_injection.sh` when network/package access is present.
 This check keeps the local acceptance gate deterministic and verifies the
 fields the extension promises to emit.
 """

@@ -17,7 +17,7 @@ import org.junit.jupiter.api.Test;
 
 /** Locks the Java v2 body contract to the shared cross-language fixture. */
 class OutputV2SharedContractTest {
-  private static final String FIXTURE = "tests/fixtures/output-v2-cross-language.json";
+  private static final String FIXTURE = "../tests/fixtures/output-v2-cross-language.json";
   private final ObjectMapper json = new ObjectMapper();
 
   @Test

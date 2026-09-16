@@ -1,6 +1,6 @@
 # 配置参考
 
-本页以当前 SecurityContext Java 0.3.0 源码读取的键为准。JVM system property 优先于同名环境变量；环境变量把小写点号和连字符转换为大写下划线，例如 `security.max.objects` 对应 `SECURITY_MAX_OBJECTS`。大多数配置在 exporter、请求状态或 SBOM 库存创建时读取，不能通过改 system property 热更新。pause、verification run 和例外是 `control.json` 的运行时控制，见[运行运维与 CLI](operations.md)。
+本页以当前 SecurityContext Java 0.3.4 源码读取的键为准。JVM system property 优先于同名环境变量；环境变量把小写点号和连字符转换为大写下划线，例如 `security.max.objects` 对应 `SECURITY_MAX_OBJECTS`。大多数配置在 exporter、请求状态或 SBOM 库存创建时读取，不能通过改 system property 热更新。pause、verification run 和例外是 `control.json` 的运行时控制，见[运行运维与 CLI](operations.md)。
 
 ## 加载扩展
 
@@ -119,8 +119,8 @@ Java 追踪表按对象身份使用弱引用，业务不再引用的中间值可
 
 ## 输出、隐私与失败处理
 
-`security-sbom` 的 `SbomInventory.publish` 负责 SBOM 临时文件和 atomic move；`security-exporter` 只负责 OTel Logs、安全证据 JSONL、有界队列和轮转。ArchiveScanner 能处理的扫描失败或超限会发布带 completeness reasons 的有效部分快照；publish/refresh 未处理失败时保留上一份有效 SBOM，并发出 `security.sbom.update_failed`。
+`java/security-sbom` 的 `SbomInventory.publish` 负责 SBOM 临时文件和 atomic move；`java/security-exporter` 只负责 OTel Logs、安全证据 JSONL、有界队列和轮转。ArchiveScanner 能处理的扫描失败或超限会发布带 completeness reasons 的有效部分快照；publish/refresh 未处理失败时保留上一份有效 SBOM，并发出 `security.sbom.update_failed`。
 
 默认输出只包含来源类型、字段名、传播关系、规则、代码位置、Span/Trace 关联、组件引用和完整性状态，不包含请求正文、完整 SQL、命令文本、URL 原文或命令参数值。证据和 SBOM 都是有界 process-local 观察，不是漏洞召回率或后端持久化保证。
 
-更多字段语义见[证据与 SBOM 语义](evidence-and-sbom.md)和[schema v2 日志结构](security-context-log-schema.md)；当前 Java 0.3.0 的端到端验收结果尚未由新的四 JVM 发布门禁产生，门禁报告出现后再引用其中的结果和未测边界。旧 0.2.1 与 candidate3 结果只作历史资料。
+更多字段语义见[证据与 SBOM 语义](evidence-and-sbom.md)和[schema v2 日志结构](security-context-log-schema.md)；当前 Java 0.3.4 的端到端验收结果必须以对应发行记录为准，不能由旧四 JVM 门禁推导。旧 0.2.1 与 candidate3 结果只作历史资料。

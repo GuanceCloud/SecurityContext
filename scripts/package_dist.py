@@ -18,9 +18,10 @@ import zipfile
 
 
 ROOT = Path(__file__).resolve().parents[1]
+JAVA_ROOT = ROOT / 'java'
 VERSION = '0.3.4'
 NAME = 'securitycontext-' + VERSION
-VALIDATION = ROOT / 'build/validation/dist-20260911/java/artifacts.json'
+VALIDATION = JAVA_ROOT / 'build/validation/dist-20260911/java/artifacts.json'
 AGENT_SHA256 = 'bbf83c151b6400709e2f225bdd07a04f839d9d13b8b93464241333fd25d3e3ba'
 EPOCH = int(os.environ.get('SOURCE_DATE_EPOCH', '1789084800'))
 
@@ -110,7 +111,7 @@ def archives(package, temporary):
 
 
 def build(destination, replace):
-    version_match = re.search(r'version\s*=\s*"([^"]+)"', (ROOT / 'build.gradle.kts').read_text())
+    version_match = re.search(r'version\s*=\s*"([^"]+)"', (JAVA_ROOT / 'build.gradle.kts').read_text())
     baseline = json.loads(VALIDATION.read_text())
     if not version_match or version_match.group(1) != VERSION or baseline['version'] != VERSION:
         raise ValueError('Build version and validated release version must match')
@@ -129,9 +130,9 @@ def build(destination, replace):
         temporary = Path(temporary_name)
         package = temporary / NAME
         package.mkdir()
-        for path in payload_files(ROOT / 'release'):
+        for path in payload_files(JAVA_ROOT / 'release'):
             if path.name != '.DS_Store' and not re.search(r' \d+\.', path.name):
-                copy(path, package / path.relative_to(ROOT / 'release'))
+                copy(path, package / path.relative_to(JAVA_ROOT / 'release'))
         required_docs = ['README.zh-CN.md', 'README.en.md', 'RELEASE_NOTES.zh-CN.md',
                          'RELEASE_NOTES.en.md', 'docs/guide.zh-CN.md', 'docs/guide.en.md',
                          'bin/run-demo.sh', 'licenses/opentelemetry-javaagent/LICENSE']
@@ -147,19 +148,19 @@ def build(destination, replace):
 
         inputs = []
         for artifact in baseline['artifacts']:
-            source = ROOT / artifact['path']
+            source = JAVA_ROOT / artifact['path']
             folder = 'lib' if source.name == 'securitycontext.jar' else 'examples/apps'
             target = package / folder / source.name
             checked_copy(source, target, artifact['sha256'])
             inputs.append(target)
         agent = package / 'lib/opentelemetry-javaagent-2.31.1.jar'
-        checked_copy(ROOT / 'build/deps' / agent.name, agent, AGENT_SHA256)
+        checked_copy(JAVA_ROOT / 'build/deps' / agent.name, agent, AGENT_SHA256)
         inputs.append(agent)
         for name in ['otel-collector-config.yaml', 'otel-collector-persistent.yaml',
                      'docker-compose.collector.yml', 'docker-compose.persistent.yml']:
             copy(ROOT / 'deploy' / name, package / 'collector' / name)
 
-        fixture = ROOT / baseline['example_fixture']
+        fixture = JAVA_ROOT / baseline['example_fixture']
         for name in ['application.cdx.json', 'verification.json']:
             copy(fixture / name, package / 'examples/observed' / name)
         evidence = [json.loads(line) for line in (fixture / 'evidence.jsonl').read_text().splitlines() if line.strip()]
@@ -171,7 +172,7 @@ def build(destination, replace):
         for artifact in inputs:
             license_resources(artifact.read_bytes(), artifact.name, package, inventory,
                               nested=artifact.parent.name == 'apps')
-        cache = ROOT / 'build/validation/gradle-home/caches/modules-2/files-2.1/com.fasterxml.jackson.core'
+        cache = JAVA_ROOT / 'build/validation/gradle-home/caches/modules-2/files-2.1/com.fasterxml.jackson.core'
         for name in ['jackson-annotations', 'jackson-core', 'jackson-databind']:
             matches = sorted((cache / name / '2.19.2').glob('*/*.jar'))
             if len(matches) != 1:

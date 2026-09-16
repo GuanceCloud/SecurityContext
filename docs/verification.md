@@ -1,6 +1,6 @@
 # 验证矩阵与 0.2.1 验收协议
 
-当前实现版本为 **0.2.1**。本版重建后的 `build/validation/v021/validation.json` 状态为 `pass`，覆盖冻结 JAR、单测、四腿注入矩阵和 product E2E；包外解包与官方 CycloneDX Schema 结果以发行目录的 `securitycontext-0.2.1-validation.json` 为准。强杀/主机故障恢复、trace 重放、Collector/WAL 和外部后端 ACK 仍属于本轮未运行或原型边界，不会被静态检查改写为已验证。
+本文验证对象版本为 **0.2.1**，属于历史记录，不代表当前 Java 0.3.4 的发布状态。本版重建后的 `build/validation/v021/validation.json` 状态为 `pass`，覆盖冻结 JAR、单测、四腿注入矩阵和 product E2E；包外解包与官方 CycloneDX Schema 结果以发行目录的 `securitycontext-0.2.1-validation.json` 为准。强杀/主机故障恢复、trace 重放、Collector/WAL 和外部后端 ACK 仍属于本轮未运行或原型边界，不会被静态检查改写为已验证。
 
 ## 0.2.1 独立验证状态
 
@@ -32,7 +32,7 @@ product E2E 在同一个受控演示进程和声明路由内完成 11/11 request
 - 矩阵、CLI、schema、Collector、benchmark 和包检查都必须引用 v0.2.1 原始产物；旧 0.2.0/candidate3 结果只能放在下方历史章节。
 - 任何 benchmark 都只能作为当前测量环境的记录，不得写成生产容量、性能或 SLA 结论。
 
-> **历史证据可用性说明（2026-09-08）**：Java 验证 agent 误执行 `scripts/orbstack_build.sh clean --offline`，导致源码仓库的 `build/validation/` 目录被删除。当前没有从 Time Machine 或本地快照恢复该目录；旧 dist 内的验证报告、manifest 和示例仍保留。下列旧日志路径仅作为历史索引，当前无法逐项复查，不表示原始日志已恢复或已重新验证。0.2.1 的任何结论必须由本次重新运行生成的 v0.2.1 证据支撑。
+> **历史证据可用性说明（2026-09-08）**：Java 验证 agent 误执行当时的 `scripts/orbstack_build.sh clean --offline`，导致源码仓库的 `build/validation/` 目录被删除。脚本现已归档到 `java/scripts/`。当前没有从 Time Machine 或本地快照恢复该目录；旧 dist 内的验证报告、manifest 和示例仍保留。下列旧日志路径仅作为历史索引，当前无法逐项复查，不表示原始日志已恢复或已重新验证。0.2.1 的任何结论必须由本次重新运行生成的 v0.2.1 证据支撑。
 
 ## 0.2.0 历史 candidate3 最终验收证据
 

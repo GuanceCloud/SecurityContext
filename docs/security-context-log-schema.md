@@ -2,7 +2,7 @@
 
 > 文档日期：2026-09-08。本文定义 Node.js、Python 和 Java 共享的 SecurityContext 输出契约。
 > 字段说明以当前三种 schema helper、exporter 和状态快照实现为准；本次运行验证的范围和限制见第 15 节，不将局部验证等同于完整发布门禁。
-> 本文只描述结构，不把旧 `build/`、`dist/` 或 `release/` 目录中的 0.2.1 证据当作当前版本的发布验证。
+> 本文只描述结构，不把旧 `build/`、`dist/` 或 `java/release/` 目录中的 0.2.1 证据当作当前版本的发布验证。
 
 ## 1. 名称、版本和范围
 
@@ -10,9 +10,9 @@ SecurityContext 是品牌名，也是三种实现使用的 OpenTelemetry instrum
 
 | 实现 | 对外包/命名空间 | 当前 schema 版本 | 版本 | OTel scope |
 | --- | --- | ---: | ---: | --- |
-| Node.js | npm `securitycontext` | 2 | `0.2.0` | `SecurityContext` |
-| Python | distribution/import `securitycontext` | 2 | `0.2.0` | `SecurityContext` |
-| Java | `io.securitycontext.*`，扩展 `securitycontext.jar` | 2 | `0.3.0` | `SecurityContext` |
+| Node.js | npm `securitycontext` | 2 | `0.2.5` | `SecurityContext` |
+| Python | distribution/import `securitycontext` | 2 | `0.2.5` | `SecurityContext` |
+| Java | `io.securitycontext.*`，扩展 `securitycontext.jar` | 2 | `0.3.4` | `SecurityContext` |
 
 仓库中保留的旧构建、发行和验证文件属于历史 0.2.1 记录。它们可以用于追溯旧实现，不能证明上述新版本已经完成打包、发布或收件方验收。
 
@@ -352,7 +352,7 @@ dataflow 中的 `component` 固定为以下轻量引用结构：
 
 | 维度 | Node.js | Python | Java |
 | --- | --- | --- | --- |
-| 包/版本 | `securitycontext` 0.2.0 | `securitycontext` 0.2.0 | `io.securitycontext.*` / `securitycontext.jar` 0.3.0 |
+| 包/版本 | `securitycontext` 0.2.5 | `securitycontext` 0.2.5 | `io.securitycontext.*` / `securitycontext.jar` 0.3.4 |
 | runtime | `javascript` / `nodejs` | `python` / `cpython` | `java` / `jvm` |
 | runtime details | 可为空 | `gil_build` | `vendor`、`vm_name` |
 | 文本 range | `utf16_code_unit` | `unicode_code_point` | `utf16_code_unit` |
@@ -385,10 +385,10 @@ Node.js、Python 和 Java 可以有不同的适配器、代码位置格式和组
 
 - [Node.js schema.mjs](../nodejs/src/schema.mjs)
 - [Python schema.py](../python/src/securitycontext/schema.py)
-- [Java Events.java](../security-core/src/main/java/io/securitycontext/core/Events.java)
+- [Java Events.java](../java/security-core/src/main/java/io/securitycontext/core/Events.java)
 - [Node.js identity/exporter](../nodejs/src/config.mjs)、[Node.js exporter](../nodejs/src/exporter/index.mjs)
 - [Python identity/state/exporter](../python/src/securitycontext/config.py)、[Python state](../python/src/securitycontext/state.py)、[Python exporter](../python/src/securitycontext/exporter.py)
-- [Java identity](../security-core/src/main/java/io/securitycontext/core/Identity.java)、[Java state](../security-core/src/main/java/io/securitycontext/core/SecurityState.java)、[Java exporter](../security-exporter/src/main/java/io/securitycontext/exporter/EvidenceExporter.java)
+- [Java identity](../java/security-core/src/main/java/io/securitycontext/core/Identity.java)、[Java state](../java/security-core/src/main/java/io/securitycontext/core/SecurityState.java)、[Java exporter](../java/security-exporter/src/main/java/io/securitycontext/exporter/EvidenceExporter.java)
 
 解析器应先按 body 的 `event_name` 分派，再按事件类型读取可选字段；应保留 `source`、`truncated`、`coverage_gaps`、`identity_status`、`trace_availability`、`counts` 和 delivery 丢弃计数。不要把缺失字段补成成功、零计数、完整 trace、已解析组件或安全结论。
 
@@ -406,4 +406,4 @@ Node.js、Python 和 Java 可以有不同的适配器、代码位置格式和组
 
 对三种实现的实际 HTTP dataflow 样例逐项比较，事件根部及 `request`、`sink`、`component`、`runtime`、`sources[]`、`ranges[]`、`propagation[]` 的键集合一致，日志和自有快照均保留 `source=security_context`。Node/Python 样例仍如实记录未建模调用等 `coverage_gaps`；Node 样例的 health 为 `incomplete`，安全通道丢弃为 0，SBOM 通道预算丢弃为 233。这些状态不代表字段不一致，也不能被解释为完整采集或零交付损失。
 
-以上是日志统一阶段的范围：当时没有重跑完整发布矩阵、全部数据库 client 或长时间性能检查，Node tarball 导入使用了已有依赖。随后生成的本地发行版及扩展验收记录集中在[多语言发行目录](../dist/securitycontext-releases-20260908/README.zh-CN.md)，包括 Java `0.3.0`、Node.js/Python `0.2.0` 的制品、双语指南、校验和及各语言 `release-validation.json`；当前发行结论以这些记录为准。没有向远程包仓库发布。
+以上是日志统一阶段的范围：当时没有重跑完整发布矩阵、全部数据库 client 或长时间性能检查，Node tarball 导入使用了已有依赖。随后生成的本地发行版及扩展验收记录集中在当时的多语言发行目录，包括 Java `0.3.0`、Node.js/Python `0.2.0` 的制品、双语指南、校验和及各语言 `release-validation.json`；这些记录只代表该历史发行。没有向远程包仓库发布。

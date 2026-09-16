@@ -48,7 +48,7 @@
 
 ## 构建和运行
 
-`boot2` 目标为 Spring Boot 2.7.18、`javax` Servlet 和 Java 8 字节码；`boot3` 目标为 Spring Boot 3.5.0、`jakarta` Servlet 和 Java 17 字节码。仓库根目录构建：
+`boot2` 目标为 Spring Boot 2.7.18、`javax` Servlet 和 Java 8 字节码；`boot3` 目标为 Spring Boot 3.5.0、`jakarta` Servlet 和 Java 17 字节码。在仓库的 `java/` 目录构建：
 
 ```bash
 ./scripts/orbstack_build.sh \
@@ -105,17 +105,17 @@ scripts/validate_switches.sh
 这些脚本是可复用的回归入口；它们产生的旧 e604/da99 目录不能直接作为 0.2.0 验收。0.2.0 run 应使用本地 CLI：
 
 ```bash
-python3 scripts/securityctl.py --dir ./build/validation/my-run run-start \
+python3 ../scripts/securityctl.py --dir ./build/validation/my-run run-start \
   --case sql-dynamic --rule sql_injection \
   --suite security-matrix --fixture boot2-java8 \
   --expected-requests 1 --ttl 300
 
 # 发送唯一的 case 请求后：
-python3 scripts/securityctl.py --dir ./build/validation/my-run run-stop \
+python3 ../scripts/securityctl.py --dir ./build/validation/my-run run-stop \
   --output ./build/validation/my-run/sql-dynamic.run.json
 ```
 
-baseline/candidate 的 `identity.code.repository`、`commit`、`build_id` 必须完整，`securityctl.py verify` 的 `not_observed` 只表示指定 fixture/suite 和请求门槛下未观察到风险，不表示 fixed。完整命令和 output 字段见[运行运维与 CLI](../docs/operations.md)。
+baseline/candidate 的 `identity.code.repository`、`commit`、`build_id` 必须完整，`securityctl.py verify` 的 `not_observed` 只表示指定 fixture/suite 和请求门槛下未观察到风险，不表示 fixed。完整命令和 output 字段见[运行运维与 CLI](../../docs/operations.md)。
 
 ## 客户端版本和边界
 

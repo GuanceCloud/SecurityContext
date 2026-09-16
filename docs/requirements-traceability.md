@@ -1,6 +1,6 @@
 # 需求追踪
 
-当前接口版本为 **0.2.1**。`build/validation/v021/validation.json` 已记录本版冻结制品、单测、四腿矩阵和 product E2E 的 `pass` 结果；包外解包与官方 CycloneDX Schema 结果以发行目录的 `securitycontext-0.2.1-validation.json` 为准。旧 candidate3/0.2.0 结果只作为历史资料。强杀/主机故障恢复、trace 重放、Collector/WAL 和外部后端 ACK 保持为本轮未运行或明确未测边界。
+本文追踪的接口版本为 **0.2.1**，属于历史记录，不代表当前 Java 0.3.4 的需求状态。`build/validation/v021/validation.json` 已记录本版冻结制品、单测、四腿矩阵和 product E2E 的 `pass` 结果；包外解包与官方 CycloneDX Schema 结果以发行目录的 `securitycontext-0.2.1-validation.json` 为准。旧 candidate3/0.2.0 结果只作为历史资料。强杀/主机故障恢复、trace 重放、Collector/WAL 和外部后端 ACK 保持为本轮未运行或明确未测边界。
 
 状态含义：
 

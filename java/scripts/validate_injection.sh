@@ -12,7 +12,7 @@ otel_version="${OTEL_JAVAAGENT_VERSION:-2.31.1}"
 bundled_otel_agent="$repo_root/build/deps/opentelemetry-javaagent-$otel_version.jar"
 otel_agent="${OTEL_AGENT_JAR:-$bundled_otel_agent}"
 extension_jar="${EXTENSION_JAR:-$repo_root/security-otel-extension/build/libs/securitycontext.jar}"
-compose_file="$repo_root/deploy/docker-compose.collector.yml"
+compose_file="$(cd "$repo_root/.." && pwd)/deploy/docker-compose.collector.yml"
 findings_sample_seconds="${SECURITY_FINDINGS_SAMPLE_SECONDS:-300}"
 
 mkdir -p "$validation_dir"
@@ -24,7 +24,7 @@ fi
 
 if [ ! -f "$extension_jar" ]; then
     printf 'extension jar is missing: %s\n' "$extension_jar" >&2
-    printf '%s\n' 'Build it first with scripts/orbstack_build.sh assemble.' >&2
+    printf '%s\n' 'Build it first with java/scripts/orbstack_build.sh assemble.' >&2
     exit 2
 fi
 

@@ -8,14 +8,28 @@ version = "0.2.5"
 description = "Bounded OpenTelemetry security dataflow evidence and runtime SBOM for Python web services"
 readme = "README.md"
 requires-python = ">=3.11,<3.15"
+keywords = ["opentelemetry", "security", "sbom", "observability"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
 dependencies = ["opentelemetry-api==1.44.0", "opentelemetry-instrumentation==0.65b0", "opentelemetry-instrumentation-threading==0.65b0", "wrapt>=1.17,<3", "packaging>=24"]
+
+[project.urls]
+Homepage = "https://github.com/GuanceCloud/SecurityContext"
+Repository = "https://github.com/GuanceCloud/SecurityContext.git"
+Issues = "https://github.com/GuanceCloud/SecurityContext/issues"
 
 [project.optional-dependencies]
 fastapi = ["opentelemetry-instrumentation-fastapi==0.65b0"]
 flask = ["opentelemetry-instrumentation-flask==0.65b0"]
 django = ["opentelemetry-instrumentation-django==0.65b0"]
 otlp = ["opentelemetry-distro==0.65b0", "opentelemetry-exporter-otlp-proto-http==1.44.0"]
-test = ["pytest>=8,<10", "build>=1.2,<2", "fastapi", "pydantic>=2,<3", "flask>=3.1,<3.2", "django>=5.2,<5.3", "uvicorn", "gunicorn", "httpx", "requests", "aiohttp", "sqlalchemy>=2,<3", "psycopg[binary]>=3,<4", "pymysql>=1,<2", "python-multipart", "jsonschema", "psutil"]
+test = ["pytest>=8,<10", "build>=1.2,<2", "opentelemetry-sdk==1.44.0", "fastapi", "pydantic>=2,<3", "flask>=3.1,<3.2", "django>=5.2,<5.3", "uvicorn", "gunicorn", "httpx", "requests", "aiohttp", "sqlalchemy>=2,<3", "psycopg[binary]>=3,<4", "pymysql>=1,<2", "python-multipart", "jsonschema", "psutil"]
 
 [project.entry-points.opentelemetry_instrumentor]
 securitycontext = "securitycontext:SecurityInstrumentor"

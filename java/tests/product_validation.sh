@@ -2,12 +2,13 @@
 set -euo pipefail
 
 repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+repository_root="$(cd "$repo_root/.." && pwd)"
 docker_context="${DOCKER_CONTEXT:-orbstack}"
 docker_cmd=(docker --context "$docker_context")
 app_jar="${APP_JAR:-$repo_root/samples/boot2/build/libs/security-validation-boot2.jar}"
 otel_agent="${OTEL_AGENT:-$repo_root/build/deps/opentelemetry-javaagent-2.31.1.jar}"
 extension_jar="${EXTENSION_JAR:-$repo_root/security-otel-extension/build/libs/securitycontext.jar}"
-cli="${SECURITYCTL:-$repo_root/scripts/securityctl.py}"
+cli="${SECURITYCTL:-$repository_root/scripts/securityctl.py}"
 java_image="${JAVA_IMAGE:-eclipse-temurin:17-jre}"
 port="${PORT:-18120}"
 output="${VALIDATION_OUTPUT:-$repo_root/build/validation/product-e2e-$(date +%Y%m%d-%H%M%S)}"

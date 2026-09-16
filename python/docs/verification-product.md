@@ -85,7 +85,7 @@ PYTHONPATH=python/src:python/samples \
   --output build/validation/python-v01/product/<version>
 ```
 
-已安装的 shared QA 容器记录的是历史 v0.1.0 Python distribution；本切片也只验证了该历史 package 的 canonical CLI 路径。安装 wheel 的 console script、包内样例/文档/constraints/Collector 资源和 canonical CLI 复制关系由独立 package validation 记录；当前 0.2.0 安装后应按主 README 的 `importlib.resources.files("securitycontext").joinpath("data", "samples")` 方式取得样例目录，并设置 `SECURITY_ENABLED=true` 与 `SECURITY_PYTHON_INCLUDE=security_sample`。
+已安装的 shared QA 容器记录的是历史 v0.1.0 Python distribution；本切片也只验证了该历史 package 的 canonical CLI 路径。安装 wheel 的 console script、包内样例/文档/constraints/Collector 资源和 canonical CLI 复制关系由独立 package validation 记录；当前 0.2.5 安装后应按主 README 的 `importlib.resources.files("securitycontext").joinpath("data", "samples")` 方式取得样例目录，并设置 `SECURITY_ENABLED=true` 与 `SECURITY_PYTHON_INCLUDE=security_sample`。
 
 本报告中的 `build/validation` 链接、Collector 原始日志和最终外部 `SHA256SUMS` 都是仓库 checkout 的项目证据，不保证随 wheel 发出；当前 wheel 携带的构建类声明资源位于 `securitycontext/data/`。报告/产物目录不要用自身的 hash 代替最终外部 `SHA256SUMS`。
 

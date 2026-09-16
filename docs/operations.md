@@ -1,6 +1,6 @@
 # 运行运维与 CLI
 
-SecurityContext 0.3.0 把进程内安全观察、SBOM 快照和验证控制放在同一个 output 目录，提供本地 `securityctl.py` 读取和控制。CLI 只操作本地 JSON 文件，不启动 HTTP 管理端口，也不替代后端持久化。新的 `build/validation/v030/` 四 JVM 发布门禁尚未执行；产生门禁产物后，运行状态和[验证矩阵](verification.md)才可引用该版本结果。旧 0.2.1 结果只作历史资料。自有快照和 CLI 报告带顶层 `source=security_context`，控制/报告自身 schema 可以保持 v1。
+SecurityContext 0.3.4 把进程内安全观察、SBOM 快照和验证控制放在同一个 output 目录，提供本地 `securityctl.py` 读取和控制。CLI 只操作本地 JSON 文件，不启动 HTTP 管理端口，也不替代后端持久化。当前版本的运行结论必须引用对应发行记录；[验证矩阵](verification.md)保留的是 0.2.1 历史记录，不能用于证明 0.3.4。自有快照和 CLI 报告带顶层 `source=security_context`，控制/报告自身 schema 可以保持 v1。
 
 ## 输出目录
 

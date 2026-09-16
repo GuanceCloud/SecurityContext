@@ -21,11 +21,12 @@ import urllib.error
 import urllib.request
 
 
-ROOT = pathlib.Path(__file__).resolve().parents[1]
-VALIDATION = ROOT / "build" / "validation" / "exports"
-AGENT = ROOT / "build" / "deps" / "opentelemetry-javaagent-2.31.1.jar"
-EXTENSION = ROOT / "security-otel-extension" / "build" / "libs" / "securitycontext.jar"
-APP = ROOT / "samples" / "boot2" / "build" / "libs" / "security-validation-boot2.jar"
+JAVA_ROOT = pathlib.Path(__file__).resolve().parents[1]
+REPOSITORY_ROOT = JAVA_ROOT.parent
+VALIDATION = JAVA_ROOT / "build" / "validation" / "exports"
+AGENT = JAVA_ROOT / "build" / "deps" / "opentelemetry-javaagent-2.31.1.jar"
+EXTENSION = JAVA_ROOT / "security-otel-extension" / "build" / "libs" / "securitycontext.jar"
+APP = JAVA_ROOT / "samples" / "boot2" / "build" / "libs" / "security-validation-boot2.jar"
 IMAGE = "eclipse-temurin:17-jre"
 
 
@@ -84,7 +85,7 @@ def free_port(excluded: set[int] | None = None) -> int:
 
 def collector_up(project: str) -> None:
     docker(
-        "compose", "-p", project, "-f", str(ROOT / "deploy" / "docker-compose.collector.yml"),
+        "compose", "-p", project, "-f", str(REPOSITORY_ROOT / "deploy" / "docker-compose.collector.yml"),
         "up", "-d", "otel-collector"
     )
     wait_http("http://127.0.0.1:13133/")
@@ -92,7 +93,7 @@ def collector_up(project: str) -> None:
 
 def collector_logs(project: str) -> str:
     result = docker(
-        "compose", "-p", project, "-f", str(ROOT / "deploy" / "docker-compose.collector.yml"),
+        "compose", "-p", project, "-f", str(REPOSITORY_ROOT / "deploy" / "docker-compose.collector.yml"),
         "logs", "--no-color", "otel-collector", check=False, capture=True
     )
     return result.stdout + result.stderr
@@ -100,7 +101,7 @@ def collector_logs(project: str) -> str:
 
 def collector_down(project: str) -> None:
     docker(
-        "compose", "-p", project, "-f", str(ROOT / "deploy" / "docker-compose.collector.yml"),
+        "compose", "-p", project, "-f", str(REPOSITORY_ROOT / "deploy" / "docker-compose.collector.yml"),
         "down", "--remove-orphans", check=False
     )
 

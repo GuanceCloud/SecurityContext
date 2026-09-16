@@ -1,6 +1,6 @@
 # SecurityContext Python 历史 v0.1.0 性能记录
 
-> 本页保留旧 benchmark 的运行边界和数值；归档 wheel、distribution 和 disabled-instrumentation 标识不属于当前公开包名。当前发行包和 import 使用 `securitycontext` 0.2.0，不能由本页推导当前版本已发布或已验证。
+> 本页保留旧 benchmark 的运行边界和数值；归档 wheel、distribution 和 disabled-instrumentation 标识不属于当前公开包名。当前发行包和 import 使用 `securitycontext` 0.2.5，不能由本页推导当前版本已发布或已验证。
 
 ## 结论
 

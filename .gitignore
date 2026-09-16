@@ -4,5 +4,11 @@ security-output/
 *.log
 .DS_Store
 dist/
+.idea/
+.vscode/
+.venv/
+.pytest_cache/
+.coverage
+htmlcov/
 __pycache__/
 *.py[cod]

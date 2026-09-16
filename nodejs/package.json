@@ -2,6 +2,14 @@
   "name": "securitycontext",
   "version": "0.2.5",
   "description": "Bounded OpenTelemetry security dataflow evidence and runtime SBOM for Node.js",
+  "keywords": ["opentelemetry", "security", "sbom", "observability"],
+  "homepage": "https://github.com/GuanceCloud/SecurityContext#readme",
+  "bugs": "https://github.com/GuanceCloud/SecurityContext/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GuanceCloud/SecurityContext.git",
+    "directory": "nodejs"
+  },
   "type": "module",
   "engines": { "node": ">=22.22.3 <23 || >=24.11.1 <25" },
   "exports": {
@@ -35,7 +43,7 @@
     "@opentelemetry/instrumentation-http": "0.222.0",
     "@opentelemetry/instrumentation-express": "0.70.0",
     "express": "5.2.1",
-    "express4": "npm:express@4.21.2",
+    "express4": "npm:express@4.22.3",
     "fastify": "5.12.3",
     "pg": "8.23.0",
     "mysql2": "3.24.3",
