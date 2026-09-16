@@ -24,15 +24,15 @@
   },
   "peerDependencies": { "@opentelemetry/api": ">=1.9.1 <1.10.0" },
   "dependencies": {
-    "@babel/generator": "8.0.0",
-    "@babel/parser": "8.0.4",
-    "@babel/traverse": "8.0.4",
-    "@babel/types": "8.0.4",
+    "@babel/generator": "8.0.5",
+    "@babel/parser": "8.0.5",
+    "@babel/traverse": "8.0.5",
+    "@babel/types": "8.0.5",
     "@jridgewell/trace-mapping": "0.3.31",
     "@opentelemetry/api-logs": "0.222.0",
     "@opentelemetry/core": "2.11.0",
     "@opentelemetry/instrumentation": "0.222.0",
-    "import-in-the-middle": "3.4.0",
+    "import-in-the-middle": "3.5.1",
     "require-in-the-middle": "8.0.1"
   },
   "devDependencies": {
@@ -47,7 +47,7 @@
     "express4": "npm:express@4.22.3",
     "fastify": "5.12.3",
     "pg": "8.23.0",
-    "mysql2": "3.24.3",
+    "mysql2": "3.24.4",
     "undici": "8.10.2"
   }
 }
