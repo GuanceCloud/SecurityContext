@@ -26,7 +26,7 @@
     "@babel/generator": "8.0.0",
     "@babel/parser": "8.0.4",
     "@babel/traverse": "8.0.4",
-    "@babel/types": "8.0.4",
+    "@babel/types": "8.0.5",
     "@jridgewell/trace-mapping": "0.3.31",
     "@opentelemetry/api-logs": "0.222.0",
     "@opentelemetry/core": "2.11.0",
