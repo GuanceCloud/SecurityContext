@@ -32,7 +32,7 @@
     "@opentelemetry/api-logs": "0.222.0",
     "@opentelemetry/core": "2.11.0",
     "@opentelemetry/instrumentation": "0.222.0",
-    "import-in-the-middle": "3.4.0",
+    "import-in-the-middle": "3.5.1",
     "require-in-the-middle": "8.0.1"
   },
   "devDependencies": {
