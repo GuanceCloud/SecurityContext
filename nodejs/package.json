@@ -2,6 +2,7 @@
   "name": "securitycontext",
   "version": "0.2.5",
   "description": "Bounded OpenTelemetry security dataflow evidence and runtime SBOM for Node.js",
+  "license": "Apache-2.0",
   "keywords": ["opentelemetry", "security", "sbom", "observability"],
   "homepage": "https://github.com/GuanceCloud/SecurityContext#readme",
   "bugs": "https://github.com/GuanceCloud/SecurityContext/issues",

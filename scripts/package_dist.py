@@ -139,6 +139,7 @@ def build(destination, replace):
         for name in required_docs:
             if not (package / name).is_file():
                 raise ValueError('Missing release documentation: ' + name)
+        copy(ROOT / 'LICENSE', package / 'licenses/securitycontext/LICENSE')
         copy(package / 'README.en.md', package / 'README.md')
         copy(ROOT / 'scripts/securityctl.py', package / 'bin/securityctl.py')
         validation = VALIDATION.with_name('validation.json')

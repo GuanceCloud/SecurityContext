@@ -1,5 +1,11 @@
 {
   "schema_version": 1,
+  "project_license": {
+    "component": "SecurityContext",
+    "spdx_identifier": "Apache-2.0",
+    "file": "securitycontext/LICENSE",
+    "source": "https://github.com/GuanceCloud/SecurityContext/blob/main/LICENSE"
+  },
   "upstream_files": [
     {
       "component": "OpenTelemetry Java Agent",

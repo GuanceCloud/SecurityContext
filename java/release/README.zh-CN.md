@@ -13,7 +13,7 @@ SecurityContext `0.3.4` 是一个 OpenTelemetry Java Agent extension，提供有
 - `docs/`：中英文完整指南；
 - `validation.json`、`manifest.json`、`SHA256SUMS`：包内实际制品和验证记录；
 - bundle `java/` 目录中与归档并列的 `release-validation.json`（若提供）：独立解包/收件验收记录，不属于包内容；
-- `licenses/`：随包许可证和来源索引。
+- `licenses/`：SecurityContext 的 Apache-2.0 许可证、第三方许可证和来源索引。
 
 Java 目标运行时为 8/11/17/21，Agent 目标版本为 `2.31.1`，extension API 为 `2.31.1-alpha`。解压后执行：
 

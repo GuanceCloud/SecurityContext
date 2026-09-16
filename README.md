@@ -137,6 +137,10 @@ SecurityContext/
 
 发现安全问题时，请遵循[安全策略](SECURITY.md)私密报告。参与开发前请阅读[贡献指南](CONTRIBUTING.md)。
 
+## 许可证
+
+本项目采用 [Apache License 2.0](LICENSE) 许可证。
+
 ## 文档索引
 
 - [架构与范围](docs/architecture.md)

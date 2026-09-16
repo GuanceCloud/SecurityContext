@@ -13,6 +13,10 @@ dependencies {
 }
 tasks.shadowJar {
     archiveFileName.set("securitycontext.jar")
+    from(rootProject.file("../LICENSE")) {
+        into("META-INF")
+    }
+    manifest.attributes["Bundle-License"] = "Apache-2.0"
     mergeServiceFiles()
     relocate("com.fasterxml.jackson", "io.securitycontext.shaded.jackson")
     exclude("META-INF/versions/**/module-info.class", "module-info.class")

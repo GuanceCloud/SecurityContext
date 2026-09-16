@@ -7,6 +7,8 @@ name = "securitycontext"
 version = "0.2.5"
 description = "Bounded OpenTelemetry security dataflow evidence and runtime SBOM for Python web services"
 readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
 requires-python = ">=3.11,<3.15"
 keywords = ["opentelemetry", "security", "sbom", "observability"]
 classifiers = [
