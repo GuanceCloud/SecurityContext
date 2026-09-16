@@ -1139,7 +1139,17 @@ parentPort.on('message', (message) => {
     scheduleRefresh(0);
   } else if (message.type === 'close') {
     if (state.refreshing) state.closeAfterRefresh = true;
-    else finishClose();
+    else if (state.pendingTimer) {
+      // Observations are delivered over the same MessagePort before close,
+      // but their refresh is intentionally deferred to batch loader traffic.
+      // Publish that pending batch before acknowledging shutdown so a fast
+      // application cannot leave its final loaded modules out of the durable
+      // snapshot and component mapping.
+      clearTimeout(state.pendingTimer);
+      state.pendingTimer = null;
+      state.closeAfterRefresh = true;
+      publish();
+    } else finishClose();
   }
 });
 
