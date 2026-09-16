@@ -55,7 +55,7 @@ psutil==7.2.2
 psycopg==3.3.5
 psycopg-binary==3.3.5
 pydantic==2.13.5
-pydantic-core==2.46.5
+pydantic-core==2.49.0
 Pygments==2.21.0
 pymysql==1.2.0
 pyproject-hooks==1.2.0
