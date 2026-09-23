@@ -9,7 +9,7 @@ dependencies {
     compileOnly("io.opentelemetry.javaagent:opentelemetry-javaagent-extension-api:2.31.1-alpha")
     compileOnly("io.opentelemetry.instrumentation:opentelemetry-instrumentation-api:2.31.1")
     compileOnly("io.opentelemetry.instrumentation:opentelemetry-instrumentation-api-incubator:2.31.1-alpha")
-    compileOnly("io.opentelemetry:opentelemetry-sdk-extension-autoconfigure:1.65.0")
+    compileOnly("io.opentelemetry:opentelemetry-sdk-extension-autoconfigure:1.66.0")
 }
 tasks.shadowJar {
     archiveFileName.set("securitycontext.jar")
