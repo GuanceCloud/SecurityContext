@@ -57,7 +57,7 @@ psycopg-binary==3.3.5
 pydantic==2.13.5
 pydantic-core==2.46.5
 Pygments==2.21.0
-pymysql==1.2.0
+pymysql==1.2.3
 pyproject-hooks==1.2.0
 pytest==9.1.1
 python-multipart==0.0.32
