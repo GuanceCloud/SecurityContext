@@ -6,7 +6,7 @@ dependencies {
     implementation(project(":security-core"))
     implementation(project(":security-sbom"))
     implementation(project(":security-exporter"))
-    compileOnly("io.opentelemetry.javaagent:opentelemetry-javaagent-extension-api:2.31.1-alpha")
+    compileOnly("io.opentelemetry.javaagent:opentelemetry-javaagent-extension-api:2.32.0-alpha")
     compileOnly("io.opentelemetry.instrumentation:opentelemetry-instrumentation-api:2.31.1")
     compileOnly("io.opentelemetry.instrumentation:opentelemetry-instrumentation-api-incubator:2.31.1-alpha")
     compileOnly("io.opentelemetry:opentelemetry-sdk-extension-autoconfigure:1.65.0")
